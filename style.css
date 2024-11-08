@@ -7,3 +7,13 @@ form{
 form button{
     width: 110px;
 }
+
+table, tr, th, td{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th, td{
+    padding: 15px;
+    text-align: center;
+}

@@ -1,4 +1,6 @@
 const newBookButton = document.querySelector('.newBookButton');
+const libraryTable = document.querySelector('.libraryTable');
+const bookForm = document.createElement('form');
 
 const myLibrary = [];
 let libraryCount = 0;
@@ -7,9 +9,7 @@ newBookButton.addEventListener('click', createForm);
 
 function createForm(){
 
-    document.body.removeChild(document.body.lastChild);
-        
-    const bookForm = document.createElement('form');
+    newBookButton.disabled = true;
 
     const bookTitleLabel = document.createElement('label');
     bookTitleLabel.textContent = "Title:"
@@ -43,6 +43,12 @@ function createForm(){
     const submitButton = document.createElement('button');
     submitButton.textContent = "Add To Library";
 
+    bookForm.addEventListener('submit', (event) =>
+    {
+        event.preventDefault();
+    }
+    )
+
     bookForm.appendChild(bookTitleLabel);
     bookForm.appendChild(bookTitle);
     bookForm.appendChild(authorLabel);
@@ -63,5 +69,34 @@ function Book(){
 }
 
 function addBookToLibrary(){
+    let newLibraryRow = document.createElement('tr');
 
+    let bookName = document.createElement('td');
+    bookName.textContent = bookTitle.value;
+
+    let authorName = document.createElement('td');
+    authorName.textContent = author.value;
+
+    let pageNumber = document.createElement('td');
+    pageNumber.textContent = pages.value;
+
+    let isBookRead = document.createElement('td');
+    if(bookRead.checked == true)
+        isBookRead.textContent = 'Y';
+    else   
+        isBookRead.textContent = 'N';
+
+    newLibraryRow.appendChild(bookName);
+    newLibraryRow.appendChild(authorName);
+    newLibraryRow.appendChild(pageNumber);
+    newLibraryRow.appendChild(isBookRead);
+
+    libraryTable.appendChild(newLibraryRow);
+
+    while(bookForm.firstChild)
+    {
+        bookForm.removeChild(bookForm.firstChild);
+    }
+    document.body.removeChild(bookForm);
+    newBookButton.disabled = false;
 }
