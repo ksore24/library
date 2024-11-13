@@ -125,4 +125,5 @@ function deleteBook(){
     const tempElement = document.querySelector(
         `[data-index='${tempIndex}']`);
     tempElement.remove();
+    library.splice(tempIndex, 1);
 }
