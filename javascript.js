@@ -1,12 +1,8 @@
 let library = [];
 let bookNumber = 0;
-
 const newBookButton = document.querySelector('.newBookButton');
-
 const libraryTable = document.querySelector('.libraryTable');
-
 const bookForm = document.createElement('form');
-
 newBookButton.addEventListener('click', createForm);
 
 function createForm(){
@@ -90,16 +86,27 @@ function addBookToLibrary(){
     pageNumber.textContent = book.pages;
 
     let isBookRead = document.createElement('td');
+    isBookRead.dataset.index2 = bookNumber;
     if(book.read)
         isBookRead.textContent = 'Y';
     else   
         isBookRead.textContent = 'N';
 
+    let finalColumn = document.createElement('td');
+
     let deleteButton = document.createElement('button');
     deleteButton.textContent = "delete";
     deleteButton.dataset.index = bookNumber;
 
+    let readButton = document.createElement('button');
+    readButton.textContent = "change read status";
+    readButton.dataset.index = bookNumber;
+
+    finalColumn.appendChild(deleteButton);
+    finalColumn.appendChild(readButton);
+
     deleteButton.addEventListener('click', deleteBook);
+    readButton.addEventListener('click', changeReadStatus);
 
     library[bookNumber] = book;
     bookNumber++;
@@ -108,7 +115,7 @@ function addBookToLibrary(){
     newLibraryRow.appendChild(authorName);
     newLibraryRow.appendChild(pageNumber);
     newLibraryRow.appendChild(isBookRead);
-    newLibraryRow.appendChild(deleteButton);
+    newLibraryRow.appendChild(finalColumn);
 
     libraryTable.appendChild(newLibraryRow);
 
@@ -126,4 +133,19 @@ function deleteBook(){
         `[data-index='${tempIndex}']`);
     tempElement.remove();
     library.splice(tempIndex, 1);
+}
+
+function changeReadStatus(){
+    let tempIndex2 = this.dataset.index;
+    const tempElement2 = document.querySelector(`[data-index2='${tempIndex2}']`);
+    if(tempElement2.textContent == 'Y')
+    {
+        tempElement2.textContent = 'N';
+        library[tempIndex2].read = false;
+    }
+    else if(tempElement2.textContent == 'N')
+        {
+            tempElement2.textContent = 'Y';
+            library[tempIndex2].read = true;
+        }
 }

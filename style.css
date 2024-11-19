@@ -17,3 +17,7 @@ th, td{
     padding: 15px;
     text-align: center;
 }
+
+tr:last-child, td:last-of-type{
+    border: 1px solid white;
+}
